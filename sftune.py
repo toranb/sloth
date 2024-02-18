@@ -14,7 +14,7 @@ args = TrainingArguments(
         gradient_accumulation_steps = 4,
         max_grad_norm = 0.4,
         warmup_ratio = 0.03,
-        num_train_epochs = 4,
+        num_train_epochs = 3,
         learning_rate = 1.4e-4,
         fp16 = not torch.cuda.is_bf16_supported(),
         bf16 = torch.cuda.is_bf16_supported(),
@@ -34,7 +34,7 @@ data_length = 4096
 max_seq_length = 4096
 
 model, tokenizer = FastLanguageModel.from_pretrained(
-    model_name = "/home/toranb/vthree/checkpoints/mistralai/Mistral-7B-Instruct-v0.2",
+    model_name = "/home/toranb/lit/checkpoints/mistralai/Mistral-7B-Instruct-v0.2",
     max_seq_length = max_seq_length,
     dtype=torch.bfloat16,
     load_in_4bit = True,
