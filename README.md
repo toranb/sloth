@@ -10,6 +10,8 @@ source env/bin/activate
 pip install -r requirements-all.txt
 python3 scripts/download.py --repo_id mistralai/Mistral-7B-Instruct-v0.2
 python3 scripts/convert_hf_checkpoint.py --checkpoint_dir checkpoints/mistralai/Mistral-7B-Instruct-v0.2
+cd checkpoints/mistralai/Mistral-7B-Instruct-v0.2
+cp lit_config.json config.json
 ```
 
 
