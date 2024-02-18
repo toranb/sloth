@@ -5,7 +5,6 @@ Mistral 7B chat fine tuning
 ```
 git clone --depth=1 https://github.com/Lightning-AI/lit-gpt lit
 cd lit
-git checkout 6150d04ff3b199ddefbe55e58d593ecae587b9d9
 python3 -m venv env
 source env/bin/activate
 pip install -r requirements-all.txt
