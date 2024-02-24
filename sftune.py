@@ -24,7 +24,7 @@ num_train_epochs = 5
 max_seq_length = 4096
 
 args = TrainingArguments(
-        output_dir = "/home/toranb/workspace",
+        output_dir = "./workspace",
         per_device_train_batch_size = 16,
         per_device_eval_batch_size = 16,
         gradient_accumulation_steps = 1,
@@ -75,7 +75,7 @@ def formatting_prompts_func(item):
     text = tokenizer.apply_chat_template(item, tokenize = False, add_generation_prompt = False)
     return { "text" : text }
 
-full_dataset = load_mixed_epochs("/home/toranb/sloth/mixed.json", num_train_epochs)
+full_dataset = load_mixed_epochs("./data.json", num_train_epochs)
 dataset = full_dataset.train_test_split(test_size=0.08)
 train_dataset = dataset['train'].map(formatting_prompts_func)
 eval_dataset = dataset['test'].map(formatting_prompts_func)
