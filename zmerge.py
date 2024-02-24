@@ -21,7 +21,7 @@ def main():
 
     max_seq_length = 4096
     model, tokenizer = FastLanguageModel.from_pretrained(
-        model_name = "/home/toranb/vthree/checkpoints/mistralai/Mistral-7B-Instruct-v0.2",
+        model_name = model_path,
         max_seq_length = max_seq_length,
         dtype=torch.bfloat16,
         load_in_4bit = False,
