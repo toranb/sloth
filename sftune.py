@@ -20,32 +20,31 @@ def load_mixed_epochs(path, epochs = 1):
 
     return Dataset.from_pandas(pd.DataFrame(mixed_epochs))
 
-num_train_epochs = 5
-max_seq_length = 4096
+num_train_epochs = 2
+max_seq_length = 2124
 
 args = TrainingArguments(
         output_dir = "./workspace",
         per_device_train_batch_size = 16,
         per_device_eval_batch_size = 16,
         gradient_accumulation_steps = 1,
-        max_grad_norm = 0.3,
-        warmup_ratio = 0.04,
-        num_train_epochs = 1,
+        max_grad_norm = 0.5,
+        warmup_ratio = 0.03,
+        num_train_epochs = 2,
         learning_rate = 2e-4,
         fp16 = not torch.cuda.is_bf16_supported(),
         bf16 = torch.cuda.is_bf16_supported(),
         logging_steps = 1,
-        save_steps = 25,
+        save_steps = 50,
         save_total_limit = 5,
-        eval_delay = 900,
+        eval_delay = 500,
         eval_accumulation_steps = 1,
         evaluation_strategy = "steps",
-        eval_steps = 20,
+        eval_steps = 150,
         optim = "adamw_torch",
         weight_decay = 0.001,
         lr_scheduler_type = "cosine",
-        report_to = "none",
-        seed = 4222,
+        seed = 4226,
     )
 
 model, tokenizer = FastLanguageModel.from_pretrained(
@@ -90,13 +89,13 @@ eval_dataset = eval_dataset.remove_columns(
 
 ft_model = FastLanguageModel.get_peft_model(
     model,
-    r = 64,
+    r = 16,
     target_modules = ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
-    lora_alpha = 128,
+    lora_alpha = 64,
     lora_dropout = 0,
     bias = "none",
     use_gradient_checkpointing = True,
-    random_state = 4222,
+    random_state = 4226,
 )
 
 ft_model.config.use_cache = False
