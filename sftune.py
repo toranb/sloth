@@ -75,7 +75,7 @@ def formatting_prompts_func(item):
     return { "text" : text }
 
 full_dataset = load_mixed_epochs("./data.json", num_train_epochs)
-dataset = full_dataset.train_test_split(test_size=0.08)
+dataset = full_dataset.train_test_split(test_size=0.07)
 train_dataset = dataset['train'].map(formatting_prompts_func)
 eval_dataset = dataset['test'].map(formatting_prompts_func)
 
