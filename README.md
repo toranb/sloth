@@ -26,4 +26,4 @@ python3 dpo.py --base $DPO --out $OUTPUTDIR --json $JSON
 
 ### Installation note
 
-I want pip install to work from the requirements.txt I have included here but sadly that rarely works so I'd ignore that detail here and start with unsloth["https://github.com/unslothai/unsloth"] to be sure you have a solid installation.
+I want pip install to work from the requirements.txt I have included here but sadly that rarely works so I'd ignore that detail here and start with [unsloth](https://github.com/unslothai/unsloth) to be sure you have a solid installation.
