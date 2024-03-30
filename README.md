@@ -24,6 +24,10 @@ export OUTPUTDIR=/home/toranb/sloth/fin
 python3 dpo.py --base $DPO --out $OUTPUTDIR --json $JSON
 ```
 
+### Dataset note
+
+I'm having success with this SFT configuration using a dataset of 7500 instruction, output pairs that are in total 870k tokens. If you open the sftune.py script you will see a variable at the top called `num_train_epochs` that is a multiplier so I'm essentially doubling this token count per epoch.
+
 ### Installation note
 
 I want pip install to work from the requirements.txt I have included here but sadly that rarely works so I'd ignore that detail here and start with [unsloth](https://github.com/unslothai/unsloth) to be sure you have a solid installation.
