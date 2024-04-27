@@ -9,42 +9,29 @@ from unsloth import FastLanguageModel
 from datasets import load_dataset, Dataset
 from unsloth.chat_templates import get_chat_template
 
-def load_mixed_epochs(path, epochs = 1):
-    data = {}
-    mixed_epochs = []
-    with open(path) as f:
-        data = json.load(f)
-
-    for i in range(max(epochs, 0)):
-        mixed_epochs += data
-
-    return Dataset.from_pandas(pd.DataFrame(mixed_epochs))
-
-num_train_epochs = 2
-max_seq_length = 2124
+max_seq_length = 2048
 
 args = TrainingArguments(
         output_dir = "./workspace",
         per_device_train_batch_size = 16,
         per_device_eval_batch_size = 16,
         gradient_accumulation_steps = 1,
-        max_grad_norm = 0.5,
-        warmup_ratio = 0.03,
-        num_train_epochs = 5,
+        max_grad_norm = 0.4,
+        warmup_ratio = 0.05,
+        num_train_epochs = 3,
         learning_rate = 2e-4,
         fp16 = not torch.cuda.is_bf16_supported(),
         bf16 = torch.cuda.is_bf16_supported(),
         logging_steps = 1,
-        save_steps = 50,
-        save_total_limit = 5,
-        eval_delay = 1900,
+        save_steps = 200,
+        save_total_limit = 10,
+        eval_delay = 1000,
         eval_accumulation_steps = 1,
         evaluation_strategy = "steps",
         eval_steps = 200,
-        optim = "adamw_8bit",
+        optim = "paged_adamw_8bit",
         weight_decay = 0.001,
         lr_scheduler_type = "cosine",
-        seed = 4226,
     )
 
 model, tokenizer = FastLanguageModel.from_pretrained(
@@ -74,8 +61,8 @@ def formatting_prompts_func(item):
     text = tokenizer.apply_chat_template(item, tokenize = False, add_generation_prompt = False)
     return { "text" : text }
 
-full_dataset = load_mixed_epochs("./data.json", num_train_epochs)
-dataset = full_dataset.train_test_split(test_size=0.07)
+full_dataset = load_dataset("json", data_files="./data.json")
+dataset = full_dataset['train'].train_test_split(test_size=0.07)
 train_dataset = dataset['train'].map(formatting_prompts_func)
 eval_dataset = dataset['test'].map(formatting_prompts_func)
 
@@ -89,13 +76,13 @@ eval_dataset = eval_dataset.remove_columns(
 
 ft_model = FastLanguageModel.get_peft_model(
     model,
-    r = 16,
+    r = 32,
     target_modules = ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
     lora_alpha = 64,
     lora_dropout = 0,
     bias = "none",
     use_gradient_checkpointing = True,
-    random_state = 4226,
+    random_state = 3407,
 )
 
 ft_model.config.use_cache = False
