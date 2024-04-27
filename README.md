@@ -34,7 +34,7 @@ python3 dpo.py --base $DPO --out $OUTPUTDIR --json $JSON
 
 ### Dataset note
 
-I'm having success with this SFT configuration using a dataset of 7500 instruction, output pairs that are in total 870k tokens. If you open the sftune.py script you will see a variable at the top called `num_train_epochs` that is a multiplier so I'm essentially doubling this token count per epoch.
+I'm having success with this SFT configuration using a dataset of 21k instruction, output pairs that are in total 3MIL tokens. This 21k dataset is a combination of 10k from a subset of [airoboros](https://huggingface.co/datasets/jondurbin/airoboros-3.1) and 11k from a proprietary dataset.
 
 ### Installation note
 
