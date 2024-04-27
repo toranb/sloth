@@ -12,6 +12,14 @@ pip install -r requirements.txt
 python3 sftune.py
 ```
 
+### Merge from checkpoint (optional)
+
+This cmd will merge a given checkpoint, creating a new model directory
+
+```
+rm -rf model
+python3 zmerge.py --peft /home/toranb/sloth/workspace/checkpoint-2600
+```
 
 ### DPO alignment (optional)
 
