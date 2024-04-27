@@ -39,3 +39,19 @@ I'm having success with this SFT configuration using a dataset of 7500 instructi
 ### Installation note
 
 I want pip install to work from the requirements.txt I have included here but sadly that rarely works so I'd ignore that detail here and start with [unsloth](https://github.com/unslothai/unsloth) to be sure you have a solid installation.
+
+As of April 2024, flash-attn has a problem so I'm using 2.5.6 to workaround the installer like so
+```
+python3 -m venv env
+source env/bin/activate
+pip install --upgrade pip
+pip install scipy
+pip install trl
+pip install xformers
+pip install wandb
+pip install packaging ninja einops
+pip install trl peft accelerate bitsandbytes
+pip install flash-attn==2.5.6
+pip install "unsloth[cu118-ampere-torch220] @ git+https://github.com/unslothai/unsloth.git"
+pip install --upgrade bitsandbytes
+```
