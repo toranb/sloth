@@ -38,7 +38,7 @@ I'm having success with this SFT configuration using a dataset of 21k instructio
 
 ### Installation note
 
-I want pip install to work from the requirements.txt I have included here but sadly that rarely works so I'd ignore that detail here and start with [unsloth](https://github.com/unslothai/unsloth) to be sure you have a solid installation.
+I want pip install to work from the requirements.txt I have included here but sadly that rarely works so I'd ignore that detail and start with [unsloth](https://github.com/unslothai/unsloth) to be sure you have a solid installation.
 
 As of April 2024, flash-attn has a problem so I'm using 2.5.6 to workaround the installer like so
 ```
