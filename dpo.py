@@ -2,23 +2,10 @@ import torch
 import json
 import argparse
 import pandas as pd
-from datasets import load_dataset, Dataset
+from datasets import load_dataset
 from transformers import TrainingArguments
 from trl import DPOTrainer
 from unsloth import FastLanguageModel
-
-num_train_epochs = 2
-
-def load_mixed_epochs(path, epochs = 1):
-    data = {}
-    mixed_epochs = []
-    with open(path) as f:
-        data = json.load(f)
-
-    for i in range(max(epochs, 0)):
-        mixed_epochs += data
-
-    return Dataset.from_pandas(pd.DataFrame(mixed_epochs))
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -55,28 +42,28 @@ def main():
         random_state = 4337,
     )
 
-    full_dataset = load_mixed_epochs(json_path, num_train_epochs)
-    ds = full_dataset.train_test_split(test_size=0.05)
+    full_dataset = load_dataset("json", data_files="./dpo.json")
+    ds = full_dataset['train'].train_test_split(test_size=0.01)
 
     train_dataset = ds['train']
     test_dataset = ds['test']
 
     training_args = TrainingArguments(
-        per_device_train_batch_size = 16,
-        per_device_eval_batch_size = 16,
-        num_train_epochs = 1,
+        per_device_train_batch_size = 4,
+        per_device_eval_batch_size = 4,
+        num_train_epochs = 3,
         remove_unused_columns = False,
         gradient_accumulation_steps = 1,
-        learning_rate = 1e-6,
+        learning_rate = 5e-7,
         logging_first_step = True,
         logging_steps = 1,
         output_dir = output_dir,
         optim = "rmsprop",
         bf16 = True,
         gradient_checkpointing = True,
-        eval_delay = 800,
+        eval_delay = 1000,
         save_strategy = "steps",
-        save_steps = 25,
+        save_steps = 500,
         save_total_limit = 5,
         ddp_find_unused_parameters = False,
     )
