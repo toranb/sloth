@@ -45,13 +45,7 @@ As of April 2024, flash-attn has a problem so I'm using 2.5.6 to workaround the 
 python3 -m venv env
 source env/bin/activate
 pip install --upgrade pip
-pip install scipy
-pip install trl
-pip install xformers
-pip install wandb
-pip install packaging ninja einops
-pip install trl peft accelerate bitsandbytes
-pip install flash-attn==2.5.6
-pip install "unsloth[cu118-ampere-torch220] @ git+https://github.com/unslothai/unsloth.git"
-pip install --upgrade bitsandbytes
+pip install scipy trl xformers wandb ninja einops peft accelerate bitsandbytes
+pip install flash-attn==2.5.8
+pip install "unsloth[cu118-ampere-torch211] @ git+https://github.com/unslothai/unsloth.git"
 ```
