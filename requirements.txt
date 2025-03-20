@@ -61,7 +61,7 @@ requests==2.32.3
 rich==13.9.4
 safetensors==0.5.3
 sentencepiece==0.2.0
-setuptools==77.0.1
+setuptools==77.0.3
 shtab==1.7.1
 six==1.17.0
 sympy==1.13.1
@@ -70,7 +70,7 @@ torch==2.5.1
 tqdm==4.67.1
 transformers==4.49.0
 triton==3.1.0
-trl==0.8.6
+trl==0.15.2
 typeguard==4.4.2
 typing-extensions==4.12.2
 tyro==0.9.17
