@@ -47,7 +47,7 @@ uv venv
 source .venv/bin/activate
 uv pip install "unsloth[cu126-ampere-torch250] @ git+https://github.com/unslothai/unsloth.git"
 uv pip install torch==2.5.1 xformers ninja setuptools wheel sentencepiece
-uv pip install --no-deps "trl<0.9.0" numpy pytz pandas peft accelerate bitsandbytes
+uv pip install --no-deps trl numpy pytz pandas peft accelerate bitsandbytes
 uv pip install datasets transformers
 uv pip install rich click pydantic unsloth_zoo
 uv pip install flash-attn --no-build-isolation

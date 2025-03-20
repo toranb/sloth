@@ -3,9 +3,11 @@ import json
 import argparse
 import pandas as pd
 from datasets import load_dataset
-from transformers import TrainingArguments
-from trl import DPOTrainer
+from trl import DPOConfig, DPOTrainer
 from unsloth import FastLanguageModel
+from unsloth import PatchDPOTrainer
+
+PatchDPOTrainer()
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -48,7 +50,8 @@ def main():
     train_dataset = ds['train']
     test_dataset = ds['test']
 
-    training_args = TrainingArguments(
+    training_args = DPOConfig(
+        report_to = "none",
         per_device_train_batch_size = 4,
         per_device_eval_batch_size = 4,
         num_train_epochs = 3,
@@ -71,14 +74,9 @@ def main():
     dpo_trainer = DPOTrainer(
         model,
         args = training_args,
-        beta = 0.1,
         train_dataset = train_dataset,
         eval_dataset = test_dataset,
-        tokenizer = tokenizer,
-        max_length = max_seq_length,
-        max_target_length = 3092,
-        max_prompt_length = 1024,
-        generate_during_eval = False,
+        processing_class = tokenizer,
     )
 
     dpo_trainer.train()

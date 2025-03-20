@@ -35,7 +35,7 @@ args = TrainingArguments(
     )
 
 model, tokenizer = FastLanguageModel.from_pretrained(
-    model_name = "mistralai/Mistral-7B-Instruct-v0.2",
+    model_name = "mistralai/Mistral-7B-Instruct-v0.3",
     max_seq_length = max_seq_length,
     dtype = torch.bfloat16,
     load_in_4bit = True,
